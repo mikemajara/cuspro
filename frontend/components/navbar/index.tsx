@@ -9,7 +9,10 @@ import {
   Button,
   IconButton,
   useColorMode,
-} from "@chakra-ui/core";
+  useColorModeValue,
+  HStack,
+} from "@chakra-ui/react";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 const Navbar: NextComponentType = () => {
   const [session] = useSession();
@@ -90,9 +93,10 @@ const Navbar: NextComponentType = () => {
     return (
       <IconButton
         aria-label="Toggle theme"
-        fontSize="20px"
-        icon={colorMode === "dark" ? "sun" : "moon"}
-        onClick={handleToggleTheme}
+        // fontSize="20px"
+        borderRadius="md"
+        icon={useColorModeValue(<SunIcon/>, <MoonIcon/>)}
+        onClick={() => handleToggleTheme()}
       />
     );
   };
@@ -100,7 +104,7 @@ const Navbar: NextComponentType = () => {
   return (
     <Box bg={bgColor[colorMode]}>
       <Box p={4} color={color[colorMode]} shadow="lg" pos="relative">
-        <Box maxW="xl" mx="auto" w="full">
+        <Box mx="auto" w="full">
           <Stack
             isInline
             spacing={4}
@@ -109,7 +113,7 @@ const Navbar: NextComponentType = () => {
             w="full"
           >
             <Box>
-              <Stack isInline spacing={4} align="center" fontWeight="semibold">
+              <HStack isInline spacing={4} align="center" fontWeight="semibold">
                 {linksForAllUsers.map((link) => {
                   return (
                     <Box key={link.id}>
@@ -129,14 +133,14 @@ const Navbar: NextComponentType = () => {
                       </Box>
                     );
                   })}
-              </Stack>
+              </HStack>
             </Box>
             <Box>
-              <Stack isInline spacing={4} align="center">
+              <HStack spacing={4} align="center">
                 {themeToggleButtonNode()}
                 {signInButtonNode()}
                 {signOutButtonNode()}
-              </Stack>
+              </HStack>
             </Box>
           </Stack>
         </Box>

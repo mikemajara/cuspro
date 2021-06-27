@@ -22,5 +22,8 @@
     "*.{js,json,css,md,tsx,ts}": [
       "prettier --write"
     ]
+  },
+  "dependencies": {
+    "strapi": "^3.6.5"
   }
 }

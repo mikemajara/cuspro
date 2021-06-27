@@ -12,8 +12,12 @@ import {
   Heading,
   Input,
   Stack,
+  HStack,
   useColorMode,
-} from "@chakra-ui/core";
+  Text,
+  Divider,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import Loader from "components/loader";
 import { useSession } from "next-auth/client";
 import React, { FormEvent, useEffect, useState } from "react";
@@ -39,6 +43,35 @@ const updateUserMutation = gql`
     }
   }
 `;
+
+const CardHeader = (props: any) => {
+  return <Stack spacing={1}>
+    <Heading size="md">{props.title}</Heading>
+    <Heading size="sm" fontWeight="light">{props.subtitle}</Heading>
+  </Stack>;
+}
+
+const SectionHeader = (props: any) => {
+  return <Stack spacing={1}>
+    <Heading size="sm">{props.title}</Heading>
+    <Heading size="xs" fontWeight="light">{props.subtitle}</Heading>
+  </Stack>;
+}
+
+const Card = (props: any) => {
+  const { colorMode } = useColorMode();
+  const bgColor = { light: "white", dark: "gray.800" };
+  const color = { light: "gray.800", dark: "gray.100" };
+
+  return (<Stack spacing={8}
+    p={4}
+    bg={bgColor[colorMode]}
+    color={color[colorMode]}
+    boxShadow="lg"
+    rounded="lg"
+    {...props}
+    />);
+}
 
 const MyAccountPageComponent = () => {
   const { colorMode } = useColorMode();
@@ -96,40 +129,36 @@ const MyAccountPageComponent = () => {
 
   return (
     <Stack spacing={4}>
-      <Heading color={color[colorMode]}>My Account</Heading>
       {errorNode()}
       <Grid templateColumns="repeat(1, 1fr)" gap={4}>
-        <Box
-          p={4}
-          bg={bgColor[colorMode]}
-          color={color[colorMode]}
-          shadow="sm"
-          rounded="lg"
+        <CardHeader
+          title="My Account"
+          subtitle="Change your profile, request your data, and more"/
         >
-          <Stack spacing={4}>
-            <FormControl isRequired>
-              <FormLabel htmlFor="username">Username</FormLabel>
-              <Input
-                type="text"
-                id="username"
-                value={username}
-                onChange={(e: FormEvent<HTMLInputElement>) =>
-                  setUsername(e.currentTarget.value)
-                }
-                isDisabled={updateUserFetching}
-              />
-            </FormControl>
-            <FormControl>
-              <Button
-                loadingText="Saving..."
-                onClick={handleSubmit}
-                isLoading={updateUserFetching}
-              >
-                Save
-              </Button>
-            </FormControl>
-          </Stack>
-        </Box>
+        <Card>
+          <SectionHeader title="Name & Avatar" subtitle="Change your name and profile picture"/>
+          <FormControl isRequired>
+            <FormLabel htmlFor="username">Username</FormLabel>
+            <Input
+              type="text"
+              id="username"
+              value={username}
+              onChange={(e: FormEvent<HTMLInputElement>) =>
+                setUsername(e.currentTarget.value)
+              }
+              isDisabled={updateUserFetching}
+            />
+          </FormControl>
+          <FormControl>
+            <Button
+              loadingText="Saving..."
+              onClick={handleSubmit}
+              isLoading={updateUserFetching}
+            >
+              Save
+            </Button>
+          </FormControl>
+        </Card>
       </Grid>
     </Stack>
   );

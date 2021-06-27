@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Box, useColorMode } from "@chakra-ui/core";
+import { Box, useColorMode } from "@chakra-ui/react";
 
 const Container: FC = ({ children }) => {
   const { colorMode } = useColorMode();
@@ -13,7 +13,7 @@ const Container: FC = ({ children }) => {
       fontSize="sm"
       bg={bgColor[colorMode]}
     >
-      <Box maxW="xl" mx="auto">
+      <Box maxW="4xl" mx="auto">
         {children}
       </Box>
     </Box>

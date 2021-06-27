@@ -1,5 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
-import { Box, Stack } from "@chakra-ui/core";
+import { Box, Stack } from "@chakra-ui/react";
 import Loader from "components/loader";
 import AddNewFeedForm from "components/pages/feeds/add-new-feed-form";
 import Feed from "components/pages/feeds/feed";
